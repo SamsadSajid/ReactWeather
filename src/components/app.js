@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Search from './searchbar'
-import ScrollToTop from 'react-scroll-up'
-import FloatingActionButtons from './scroll-to-top'
+import Search from './searchbar';
+import ScrollToTop from 'react-scroll-up';
+import FloatingActionButtons from './scroll-to-top';
+import Table from './table';
+
 
 export default class App extends Component {
   render() {
@@ -13,6 +15,9 @@ export default class App extends Component {
                     <FloatingActionButtons/>
                 </span>
             </ScrollToTop>
+            <div className='myclass'>
+                <Table/>
+            </div>
             <div>
                 <p className='myclass'>React simple starterReact simple starter
                     React simple starterReact simple starter

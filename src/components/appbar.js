@@ -12,8 +12,10 @@ import style_appbar from '../../style/appbar_style'
 
 
 
-function SearchAppBar(props) {
-    const { classes, placeholder, value, onInputChange } = props;
+function SearchAppBar(props){
+    const { classes, placeholder, writeInput, onFormSubmit } = props;
+
+
     return (
         <div className={classes.root}>
             <AppBar position="fixed">
@@ -29,15 +31,17 @@ function SearchAppBar(props) {
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
-                        <InputBase
-                            placeholder= {placeholder}
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            value={value}
-                            onChange={() => onInputChange()}
-                        />
+                        <form onSubmit={onFormSubmit}>
+                            <InputBase
+                                placeholder= {placeholder}
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                type='search'
+                                onChange={writeInput}
+                            />
+                        </form>
                     </div>
                 </Toolbar>
             </AppBar>
@@ -48,8 +52,7 @@ function SearchAppBar(props) {
 SearchAppBar.propTypes = {
     classes: PropTypes.object.isRequired,
     placeholder: PropTypes.string,
-    value: PropTypes.string,
-    onInputChange: PropTypes.func,
+    writeInput: PropTypes.func,
 };
 
 export default withStyles(style_appbar)(SearchAppBar);
