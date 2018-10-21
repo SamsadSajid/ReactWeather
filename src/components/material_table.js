@@ -14,6 +14,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableHead from '@material-ui/core/TableHead';
+import Chart from './chart';
 
 const actionsStyles = theme => ({
     root: {
@@ -125,21 +126,7 @@ const styles = theme => ({
 
 class CustomPaginationActionsTable extends React.Component {
     state = {
-        // rows: [
-        //     createData('Cupcake', 305, 3.7),
-        //     createData('Donut', 452, 25.0),
-        //     createData('Eclair', 262, 16.0),
-        //     createData('Frozen yoghurt', 159, 6.0),
-        //     createData('Gingerbread', 356, 16.0),
-        //     createData('Honeycomb', 408, 3.2),
-        //     createData('Ice cream sandwich', 237, 9.0),
-        //     createData('Jelly Bean', 375, 0.0),
-        //     createData('KitKat', 518, 26.0),
-        //     createData('Lollipop', 392, 0.2),
-        //     createData('Marshmallow', 318, 0),
-        //     createData('Nougat', 360, 19.0),
-        //     createData('Oreo', 437, 18.0),
-        // ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
+        // rows:[],
         page: 0,
         rowsPerPage: 5,
     };
@@ -155,8 +142,11 @@ class CustomPaginationActionsTable extends React.Component {
     render() {
         const { classes, weatherlist } = this.props;
         const { rowsPerPage, page } = this.state;
+        // The following occurs a problem
+        // this.setState({rows:weatherlist});
+        // The following doesn't cause a problem
         const rows = weatherlist;
-        console.log("len: "+rows.length);
+        // console.log("len: "+rows.length);
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
         return (
@@ -166,17 +156,33 @@ class CustomPaginationActionsTable extends React.Component {
                         <TableHead>
                             <TableRow>
                                 <CustomTableCell>City</CustomTableCell>
-                                <CustomTableCell numeric>Temperature</CustomTableCell>
-                                <CustomTableCell numeric>Pressure</CustomTableCell>
-                                <CustomTableCell numeric>Humidity</CustomTableCell>
+                                <CustomTableCell>Temperature (K)</CustomTableCell>
+                                <CustomTableCell>Pressure (hPa)</CustomTableCell>
+                                <CustomTableCell>Humidity (%)</CustomTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             { rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                                const temps = row.list.map(weather => weather.main.temp);
+                                const pressure = row.list.map(weather => weather.main.pressure);
+                                const humidity = row.list.map(weather => weather.main.humidity);
+                                // ES6 syntax. Grab lon and lat property from city.coord
+                                // and destructured it to lon and lat
+                                const {lon, lat} = row.city.coord;
+                                // console.log(temps);
                                 return (
                                     <TableRow key={row.city.name}>
                                         <TableCell component="th" scope="row">
                                             {row.city.name}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Chart data={temps} color="red" unit="K"/>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Chart data={pressure} color="green" unit="hPa"/>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Chart data={humidity} color="black" unit="%"/>
                                         </TableCell>
                                         {/*<TableCell numeric>{row.calories}</TableCell>*/}
                                         {/*<TableCell numeric>{row.fat}</TableCell>*/}

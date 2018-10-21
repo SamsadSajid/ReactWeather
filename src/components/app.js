@@ -15,7 +15,7 @@ export default class App extends Component {
                     <FloatingActionButtons/>
                 </span>
             </ScrollToTop>
-            <div className='myclass'>
+            <div className='mytable'>
                 <Table/>
             </div>
             <div>
