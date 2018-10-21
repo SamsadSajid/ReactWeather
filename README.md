@@ -17,3 +17,14 @@ The libraries I used here are:
 6. prop-types
 
 ## Demo
+![ezgif com-video-to-gif](https://user-images.githubusercontent.com/19304394/47263912-d72b0c00-d52c-11e8-9701-fe551499a9d4.gif)
+
+## How to install
+From your terminal
+`
+
+	> git clone https://github.com/SamsadSajid/ReactWeather.git
+	> cd ReactWeather
+	> npm install
+	> npm start
+`
